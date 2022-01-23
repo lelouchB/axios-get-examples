@@ -57,6 +57,22 @@ async function getCharacters() {
 }
 getCharacters();
 
+// Axios GET Query Parameters
+const url = require("url");
+const queryParams = {
+  limit: 1,
+  sort: "desc",
+};
+const params = new url.URLSearchParams(queryParams);
+console.log(params);
+axios
+  .get(`https://finalspaceapi.com/api/v0/character/?${params}`)
+  .then(function (response) {
+    console.log(response.data);
+  });
+
+
+
 // Using with API Key
 require("dotenv").config();
 axios
@@ -79,6 +95,17 @@ axios({
   console.log(response.data);
 });
 
+
+// Using Authorization Header
+// axios({
+//   method: "get",
+//   url: "<ENDPOINT>",
+//   headers: {
+//     Authorization: `Bearer ${process.env.TOKEN}`,
+//   },
+// }).then((response) => {
+//   console.log(response.data);
+// });
 
 // Axios.all()
 const endpoints = [
@@ -164,4 +191,13 @@ axios.interceptors.response.use(
 
 axios.get("https://rickandmortyapi.com/api/character/1").then((response) => {
   console.log(response.data);
+});
+
+
+
+// Axios Head Request
+axios.head("https://rickandmortyapi.com/api/character/1").then((response) => {
+  console.log(
+    `Status: ${response.status} - Server: ${response.headers.server} - Data: ${response.data}`
+  );
 });
